@@ -1,0 +1,74 @@
+<div class="mx-auto" style="width: 95%">
+    <nav class="navbar sticky-top navbar-expand-md navbar-dark bg-dark" style="font-size: 16pt;top: 56px">
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item" style="color: #ffffff; font-size: 24pt">
+                    Asignatura 1
+                </li>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse order-2 dual-collapse2 mx-auto">
+            <ul class="navbar-nav">
+                <li class="nav-item" style="padding-left: 10px; padding-right: 10px">
+                    <button class="btn btn-primary" style="font-size: 16pt" data-toggle="modal" data-target="#exampleModal">Descargar</button>
+                </li>
+                <li class="nav-item" style="padding-left: 10px; padding-right: 10px">
+                    <button class="btn btn-primary" style="font-size: 16pt" data-toggle="modal" data-target="#reportModal">Denunciar</button>
+                </li>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <button class="btn btn-primary" style="font-size: 16pt" data-toggle="modal" data-target="#upload_file_modal">Subir archivo</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <table class="table" id="content-table" style="font-size: 16pt;">
+        <thead class="thead-dark">
+        <tr style="cursor: pointer">
+            <th scope="col"></th>
+            <th scope="col">Título</th>
+            <th scope="col">Subido el</th>
+            <th scope="col">Subido por</th>
+            <th scope="col">Año académico</th>
+            <th scope="col">Puntuación</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <div class="round">
+                    <input type="checkbox" id="checkbox1">
+                    <label for="checkbox1"></label>
+                </div>
+            </td>
+            <td>Archivo 1</td>
+            <td>10/10/19</td>
+            <td>
+                <a href="profile.php" target="_blank">
+                    Juan de Vicente Tortosa
+                </a>
+            </td>
+            <td>2018-2019</td>
+            <td>
+                <div>
+                    <fieldset class="rating">
+                        <input type="radio" id="star50" name="rating0" value="5"/>
+                        <label class="full" for="star50"></label>
+                        <input type="radio" id="star40" name="rating0" value="4"/>
+                        <label class="full" for="star40"></label>
+                        <input type="radio" id="star30" name="rating0" value="3"/>
+                        <label class="full" for="star30"></label>
+                        <input type="radio" id="star20" name="rating0" value="2"/>
+                        <label class="full" for="star20"></label>
+                        <input type="radio" id="star10" name="rating0" value="1"/>
+                        <label class="full" for="star10"></label>
+                    </fieldset>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
