@@ -1,0 +1,9 @@
+<div class="containter carrer-containter">
+	<div class="row no-margin-horizontal">
+		<div class="col-sm-6 text-center" *ngFor="let career of all_careers">
+			<a routerLink="{{career.id_career}}"  title="{{career.name}}">
+				<img class="career-image rounded-circle" src="assets/{{career.img}}">
+			</a>
+		</div>
+	</div>
+</div>

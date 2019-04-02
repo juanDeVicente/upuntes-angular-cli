@@ -1,0 +1,17 @@
+.career-containter{
+    margin-top: 2%;
+}
+.years-dropdown-row{
+    margin-top: 2%;
+}
+.career-image{
+    width: 80%;
+    height: 80%;
+}
+.no-margin-horizontal {
+    margin-left: 0;
+    margin-right: 0;
+}
+.career-name{
+    font-size: 150%;
+}

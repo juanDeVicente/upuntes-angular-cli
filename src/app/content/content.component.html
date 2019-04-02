@@ -1,71 +1,7 @@
-<div class="containter-fluid">
-  <div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4 login-column">
-      <img src="resources/Upuntes_Logo.svg" class="image-upuntes-logo">
-      <form method="post" action="careers.html">
-        <div class="form-group">
-          <input type="text" class="form-control placeholder-cursive" id="email" placeholder="Dirección de correo">
-          <input type="password" class="form-control placeholder-cursive" id="password" placeholder="Constraseña">
-          <div class="form-check">
-            <label class="form-check-label">
-              <input type="checkbox" class="form-check-input" id="remember_me">Recuérdame
-            </label>
-            <a data-toggle="modal" href="#forgotten_password_modal" class="float-right">¿Contraseña olvidada?</a>
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary btn-login">Iniciar sesión</button>
-      </form>
-      ¿No eres miembro? <a data-toggle="modal" href="#register_modal">Regístrate</a>
-    </div>
-    <div class="col-md-4"></div>
-  </div>
-</div>
-<!-- Modal Register-->
-<div class="modal fade" id="register_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Registrarse</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form method="post" action="register.php">
-        <div class="modal-body" id="modal_body_register"><!-- Para futuros cambios mediante angular.js -->
-          <div class="form-group">
-            <input type="text" class="form-control placeholder-cursive" id="register_email" placeholder="Dirección de correo">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-primary">Registrarse</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-<!-- Modal ForgottenPassword-->
-<div class="modal fade" id="forgotten_password_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">¿Contraseña olvidada?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form method="post" action="forgotten_password.php">
-        <div class="modal-body" id="modal_body_forgotten_password"><!-- Para futuros cambios mediante angular.js -->
-          <div class="form-group">
-            <input type="text" class="form-control placeholder-cursive" id="forgotten_password_email" placeholder="Dirección de correo">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-primary">Enviar email de recuperación</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+<ul>
+    <li *ngFor="let person of people">
+            {{person.name}}
+    </li>
+</ul>
+<input type="text" [(ngModel)]="name">
+<button class="btn-primary" (click)="on_clicked()">Pulsar</button>
