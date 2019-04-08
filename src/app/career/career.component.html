@@ -1,9 +1,48 @@
-<div class="containter carrer-containter">
+<div class="container-fluid career-containter">
 	<div class="row no-margin-horizontal">
-		<div class="col-sm-6 text-center" *ngFor="let career of all_careers">
+		<div class="col-lg-3 col-md-6 col-sm-12 text-center" *ngFor="let career of all_careers">
 			<a routerLink="{{career.id_career}}"  title="{{career.name}}">
 				<img class="career-image rounded-circle" src="assets/{{career.img}}">
 			</a>
+			<p class="d-none d-lg-block upuntes-link"><!--Display only in large-->
+				<a routerLink="{{career.id_career}}"  title="{{career.name}}">
+					{{career.name}}
+				</a>
+			</p>
+		</div>
+	</div>
+</div>
+<!--Footer-->
+<nav class="navbar fixed-bottom upuntes-color">
+	<button class="navbar-brand mx-auto upuntes-color" type="submit" data-toggle="modal" data-target="#modalAddCareer">
+		Añadir carrera
+	</button>
+</nav>
+<!--Modal para añadir carrera-->
+<div class="modal fade" id="modalAddCareer" tabindex="-1" role="dialog" aria-labelledby="modalAddCareerTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalAddCareerTitleLong"> Añadir carrera</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group">
+						<input type="text" class="form-control" id="name" placeholder="Nombre de la carrera">
+					</div>
+					<div class="custom-file form-group">
+						<input type="file" class="custom-file-input" id="carrer_img">
+						<label class="custom-file-label" for="carrer_img">Imagen carrera</label>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary">Añadir carrera</button>
+			</div>
 		</div>
 	</div>
 </div>

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CareerService} from '../services/career/career.service';
 import {SubjectService} from '../services/subject/subject.service';
+import {async} from 'q';
 
 @Component({
 	selector: 'app-subject',
@@ -10,15 +11,16 @@ import {SubjectService} from '../services/subject/subject.service';
 })
 export class SubjectComponent implements OnInit {
 
+	id_career;
 	career;
-	subjects;
+	subjects_per_year;
 
 	constructor(private route: ActivatedRoute, private career_service: CareerService, private subject_service: SubjectService) {
 	}
 
 	ngOnInit() {
-		let id_career = this.route.snapshot.paramMap.get('id_career');
-		this.career_service.get_career(id_career).subscribe(
+		this.id_career = this.route.snapshot.paramMap.get('id_career');
+		this.career_service.get_career(this.id_career).subscribe(
 			career => {
 				this.career = career;
 			},
@@ -26,9 +28,15 @@ export class SubjectComponent implements OnInit {
 				console.log(error1);
 			}
 		);
-		this.subject_service.get_career_subjects(id_career).subscribe(
+		this.subject_service.get_career_subjects(this.id_career).subscribe(
 			subjects => {
-				this.subjects = subjects;
+				let bad_subjects = subjects;
+				let bad_subjects_keys = Object.keys(bad_subjects);
+				this.subjects_per_year = [];
+
+				for (let key of bad_subjects_keys) {
+					this.subjects_per_year.push(bad_subjects[key]);
+				}
 			},
 			error1 => {
 				console.log(error1);

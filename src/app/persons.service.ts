@@ -19,7 +19,7 @@ export class PersonsService {
     }
     get_person_by_name(name)
     {
-        let people_name = []
+        let people_name = [];
 
         for(let i = 0; i < this.people.length ; i++)
         {

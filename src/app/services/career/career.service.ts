@@ -6,8 +6,6 @@ import {HttpClient} from '@angular/common/http';
 })
 export class CareerService
 {
-	all_careers;
-
 	constructor(private http: HttpClient) {
 
 	}

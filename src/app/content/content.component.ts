@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {PersonsService} from '../persons.service';
+import {ContentService} from '../services/content/content.service';
+import {ActivatedRoute} from '@angular/router';
+import {SubjectService} from '../services/subject/subject.service';
 
 @Component({
 	selector: 'app-content',
@@ -7,26 +9,38 @@ import {PersonsService} from '../persons.service';
 	styleUrls: ['./content.component.css']
 })
 export class ContentComponent implements OnInit {
-	people;
-	people_name = [];
-	name = '';
+	id_career;
+	id_subject;
 
-	constructor(private personsService: PersonsService) {
+	subject;
+	contents;
+
+	constructor(private content_service: ContentService, private subject_service: SubjectService, private route: ActivatedRoute) {
 
 	}
 
 	ngOnInit() {
-		this.personsService.get_all_persons().subscribe(
-			persons => {
-				this.people = persons;
+		this.id_career = this.route.snapshot.paramMap.get('id_career');
+		this.id_subject = this.route.snapshot.paramMap.get('id_subject');
+
+		this.subject = this.subject_service.get_subject(this.id_subject).subscribe(
+			next => {
+				this.subject = next;
 			},
-			error => console.log(error)
+			error1 => {
+				console.log(error1);
+			}
 		);
-	}
 
-	on_clicked() {
-		this.people_name = this.personsService.get_person_by_name(this.name);
-	}
+		this.content_service.get_contents_from_subject(this.id_subject).subscribe(
+			next => {
+				this.contents = next;
+			},
+			error1 => {
+				console.log(error1);
+			}
+		);
 
+	}
 
 }

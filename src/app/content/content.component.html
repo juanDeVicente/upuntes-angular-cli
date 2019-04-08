@@ -1,7 +1,124 @@
-<ul>
-    <li *ngFor="let person of people">
-            {{person.name}}
-    </li>
-</ul>
-<input type="text" [(ngModel)]="name">
-<button class="btn-primary" (click)="on_clicked()">Pulsar</button>
+<div class="mx-auto" style="width: 95%">
+	<nav class="navbar sticky-top navbar-expand-md navbar-dark bg-dark" style="font-size: 16pt;top: 56px">
+		<div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+			<ul class="navbar-nav mr-auto">
+				<a href="/careers/{{id_career}}/" class="nav-item" style="color: #ffffff; font-size: 24pt">
+					{{subject.name}}
+				</a>
+			</ul>
+		</div>
+		<div class="navbar-collapse collapse order-2 dual-collapse2 mx-auto">
+			<ul class="navbar-nav">
+				<li class="nav-item" style="padding-left: 10px; padding-right: 10px">
+					<button class="btn btn-primary" style="font-size: 16pt" data-toggle="modal"
+							data-target="#exampleModal">Descargar
+					</button>
+				</li>
+				<li class="nav-item" style="padding-left: 10px; padding-right: 10px">
+					<button class="btn btn-primary" style="font-size: 16pt" data-toggle="modal"
+							data-target="#reportModal">Denunciar
+					</button>
+				</li>
+			</ul>
+		</div>
+		<div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+					<button class="btn btn-primary" style="font-size: 16pt" data-toggle="modal"
+							data-target="#upload_file_modal">Subir archivo
+					</button>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<table class="table" id="content-table" style="font-size: 16pt;">
+		<thead class="thead-dark">
+		<tr style="cursor: pointer">
+			<th scope="col"></th>
+			<th scope="col">Título</th>
+			<th scope="col" class="d-none d-md-table-cell">Subido el</th>
+			<th scope="col" class="d-none d-md-table-cell ">Subido por</th>
+			<th scope="col" class="d-none d-md-table-cell ">Año académico</th>
+			<th scope="col">Puntuación</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr *ngFor="let content of contents; let i = index">
+			<td>
+				<div class="round">
+					<input type="checkbox" id="checkbox{{i}}">
+					<label for="checkbox{{i}}"></label>
+				</div>
+			</td>
+			<td>{{content.content_name}}</td>
+			<td class="d-none d-md-table-cell">{{content.update_date}}</td>
+			<td class="d-none d-md-table-cell">
+				<a href="profile.php" target="_blank">
+					Juan de Vicente Tortosa
+				</a>
+			</td>
+			<td class="d-none d-md-table-cell">{{content.period}}</td>
+			<td>
+				<div>
+					<fieldset class="rating">
+						<input type="radio" id="star5{{i}}" name="rating{{i}}" value="5"/>
+						<label class="full" for="star5{{i}}"></label>
+						<input type="radio" id="star4{{i}}" name="rating{{i}}" value="4"/>
+						<label class="full" for="star4{{i}}"></label>
+						<input type="radio" id="star3{{i}}" name="rating{{i}}" value="3"/>
+						<label class="full" for="star3{{i}}"></label>
+						<input type="radio" id="star2{{i}}" name="rating{{i}}" value="2"/>
+						<label class="full" for="star2{{i}}"></label>
+						<input type="radio" id="star1{{i}}" name="rating{{i}}" value="1"/>
+						<label class="full" for="star1{{i}}"></label>
+					</fieldset>
+				</div>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+<!--Modal para subir contenido-->
+<div class="modal fade" id="upload_file_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Subir contenido</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group">
+						<input type="hidden" id="id_career" class="form-control" value="{{id_career}}">
+						<input type="hidden" id="id_subject" class="form-control" value="{{id_subject}}">
+					</div>
+					<div class="form-group">
+						<input type="text" id="content_name" class="form-control" placeholder="Nombre">
+					</div>
+					<div class="form-group">
+						<select class="form-control" id="period">
+							<option value="" disabled selected>Año académico</option> <!--placeholder-->
+							<option value="2013-2014">2013-2014</option>
+							<option value="2014-2015">2014-2015</option>
+							<option value="2015-2016">2015-2016</option>
+							<option value="2016-2017">2016-2017</option>
+							<option value="2017-2018">2017-2018</option>
+							<option value="2018-2019">2018-2019</option>
+						</select>
+					</div>
+					<div class="custom-file form-group">
+						<input type="file" class="custom-file-input" id="content">
+						<label class="custom-file-label" for="content">Contenido</label>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary">Subir contenido</button>
+			</div>
+		</div>
+	</div>
+</div>
+

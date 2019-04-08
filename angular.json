@@ -24,12 +24,12 @@
             ],
             "styles": [
               "src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.css"
+              "../upuntes-angular-cli/node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.js",
-              "node_modules/popper.js/dist/umd/popper.js",
-              "node_modules/bootstrap/dist/js/bootstrap.js"
+              "../upuntes-angular-cli/node_modules/jquery/dist/jquery.js",
+              "../upuntes-angular-cli/node_modules/popper.js/dist/umd/popper.js",
+              "../upuntes-angular-cli/node_modules/bootstrap/dist/js/bootstrap.js"
 
             ],
             "es5BrowserSupport": true

@@ -1,6 +1,59 @@
-{{career.name}}
-<div class="row no-margin-horizontal">
-	<div class="col" *ngFor="let subject of subjects">
-		{{subject.name}}
+<div id="accordion">
+	<ng-container *ngFor="let subjects of subjects_per_year; let i = index">
+		<div class="card">
+			<button class="btn collapsed btn-block year upuntes-color" data-toggle="collapse" attr.data-target="#collapse{{i}}" aria-expanded="true" attr.aria-controls="collapse{{i}}" id="heading{{i}}" style="background-color: #233365; color: whitesmoke">
+					{{i + 1}}º
+			</button>
+			<div id="collapse{{i}}" class="collapse" attr.aria-labelledby="heading{{i}}" data-parent="#accordion">
+				<div class="card-body">
+					<ul class="list-group text-center subject-drop-menu-border">
+						<li class="list-group-item subject upuntes-link" *ngFor="let subject of subjects">
+							<a routerLink="/careers/{{id_career}}/{{subject.id_subject}}">{{subject.name}}</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</ng-container>
+</div>
+<!--Footer-->
+<nav class="navbar fixed-bottom upuntes-color">
+	<button class="navbar-brand mx-auto upuntes-color" type="submit" data-toggle="modal" data-target="#AddSubjectModal" style="color: whitesmoke">
+		Añadir asignatura
+	</button>
+</nav>
+<!--Modal añadir asignatura-->
+<div class="modal fade" id="AddSubjectModal" tabindex="-1" role="dialog" aria-labelledby="AddSubjectModalTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Añadir asignatura</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group">
+						<label for="year">Año académico:</label>
+						<select class="form-control" id="year">
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" id="subject_name" placeholder="Nombre de la asignatura">
+					</div>
+					<input type="hidden" id="id_career" value="{{id_career}}">
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary">Añadir asignatura</button>
+			</div>
+		</div>
 	</div>
 </div>

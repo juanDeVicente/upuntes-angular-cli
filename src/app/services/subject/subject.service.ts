@@ -10,6 +10,9 @@ export class SubjectService {
 	}
 
 	public get_career_subjects(id_career) {
-		return this.http.get('http://localhost:80/subject/' + id_career);
+		return this.http.get('http://localhost:80/subjects/' + id_career);
+	}
+	public get_subject(id_subject){
+		return this.http.get('http://localhost:80/subject/' + id_subject);
 	}
 }
