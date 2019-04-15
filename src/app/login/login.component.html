@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-md-4"></div>
 		<div class="col-md-4 login-column">
-			<img src="resources/Upuntes_Logo.svg" class="image-upuntes-logo">
+			<img src="assets/Upuntes_Logo.svg" class="image-upuntes-logo">
 			<form method="post" action="careers.html">
 				<div class="form-group">
 					<input type="text" class="form-control placeholder-cursive" id="email"
@@ -13,13 +13,15 @@
 						<label class="form-check-label">
 							<input type="checkbox" class="form-check-input" id="remember_me">Recuérdame
 						</label>
-						<a data-toggle="modal" href="#forgotten_password_modal" class="float-right">¿Contraseña
+						<a data-toggle="modal" href="#forgotten_password_modal" class="float-right upuntes-link">¿Contraseña
 							olvidada?</a>
 					</div>
 				</div>
-				<button type="submit" class="btn btn-primary btn-login">Iniciar sesión</button>
+				<button type="submit" class="btn btn-login upuntes-color" routerLink="/careers"
+						style="background-color: #233365; color: whitesmoke">Iniciar sesión
+				</button>
 			</form>
-			¿No eres miembro? <a data-toggle="modal" href="#register_modal">Regístrate</a>
+			¿No eres miembro? <a data-toggle="modal" href="#register_modal" class="upuntes-link">Regístrate</a>
 		</div>
 		<div class="col-md-4"></div>
 	</div>
@@ -52,7 +54,8 @@
 	</div>
 </div>
 <!--Modal para registrarse-->
-<div class="modal fade" id="register_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="register_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+	 aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -64,7 +67,8 @@
 			<form method="post" action="register.php">
 				<div class="modal-body" id="modal_body_register"><!-- Para futuros cambios mediante angular.js -->
 					<div class="form-group">
-						<input type="text" class="form-control placeholder-cursive" id="register_email" placeholder="Dirección de correo">
+						<input type="text" class="form-control placeholder-cursive" id="register_email"
+							   placeholder="Dirección de correo">
 					</div>
 				</div>
 				<div class="modal-footer">

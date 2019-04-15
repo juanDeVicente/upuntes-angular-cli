@@ -1,14 +1,29 @@
 <div id="accordion">
 	<ng-container *ngFor="let subjects of subjects_per_year; let i = index">
 		<div class="card">
-			<button class="btn collapsed btn-block year upuntes-color" data-toggle="collapse" attr.data-target="#collapse{{i}}" aria-expanded="true" attr.aria-controls="collapse{{i}}" id="heading{{i}}" style="background-color: #233365; color: whitesmoke">
+			<button class="btn collapsed btn-block year upuntes-color" data-toggle="collapse" attr.data-target="#collapse{{i}}" aria-expanded="true" attr.aria-controls="collapse{{i}}" id="heading{{i}}">
 					{{i + 1}}º
 			</button>
 			<div id="collapse{{i}}" class="collapse" attr.aria-labelledby="heading{{i}}" data-parent="#accordion">
 				<div class="card-body">
 					<ul class="list-group text-center subject-drop-menu-border">
-						<li class="list-group-item subject upuntes-link" *ngFor="let subject of subjects">
-							<a routerLink="/careers/{{id_career}}/{{subject.id_subject}}">{{subject.name}}</a>
+						<li class="list-group-item subject" *ngFor="let subject of subjects">
+							<div class="row">
+								<div class="col-lg-2 col-md-12"></div>
+								<div class="col-lg-8 col-md-12 upuntes-link subject text-center">
+									<a routerLink="/careers/{{id_career}}/{{subject.id_subject}}">
+										{{subject.name}}
+									</a>
+								</div>
+								<div class="col-lg-2 col-md-12">
+									<button type="button" class="btn btn-danger text-center float-xl-right float-lg-right float-sm-none float-md-none" (click)="set_subject_to_delete(subject.id_subject, subject.name)" data-toggle="modal" data-target="#delete-subject-modal">
+										<img src="assets/icons/trash-can.svg" width="24" height="24">
+									</button>
+									<button type="button" class="btn btn-warning text-center float-xl-right float-lg-right float-sm-none float-md-none">
+										<img src="assets/icons/gear.svg" width="24" height="24">
+									</button>
+								</div>
+							</div>
 						</li>
 					</ul>
 				</div>
@@ -17,43 +32,39 @@
 	</ng-container>
 </div>
 <!--Footer-->
+<nav class="navbar" style="opacity: 0"><!--Por temas de estetica, se quita con la opaciodad pero ocupa el espacio, si tocamos la visibilidad no funciona bien el espacio-->
+	<button class="navbar-brand mx-auto upuntes-color">
+		Añadir asignatura
+	</button>
+</nav>
 <nav class="navbar fixed-bottom upuntes-color">
 	<button class="navbar-brand mx-auto upuntes-color" type="submit" data-toggle="modal" data-target="#AddSubjectModal" style="color: whitesmoke">
 		Añadir asignatura
 	</button>
 </nav>
 <!--Modal añadir asignatura-->
-<div class="modal fade" id="AddSubjectModal" tabindex="-1" role="dialog" aria-labelledby="AddSubjectModalTitle" aria-hidden="true">
+<app-form-subject></app-form-subject>
+<!--Modal confimración borrar asignatura-->
+<div class="modal fade" id="delete-subject-modal" tabindex="-1" role="dialog" aria-labelledby="delete-subject-modal-center-title" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title">Añadir asignatura</h5>
+				<h5 class="modal-title" id="delete-subject-modal-long-title">Borrar asignatura</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body">
-				<form>
-					<div class="form-group">
-						<label for="year">Año académico:</label>
-						<select class="form-control" id="year">
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" id="subject_name" placeholder="Nombre de la asignatura">
-					</div>
-					<input type="hidden" id="id_career" value="{{id_career}}">
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-				<button type="button" class="btn btn-primary">Añadir asignatura</button>
+			<div id="delete-subject-modal-body">
+				<div class="modal-body">
+					¿Estás seguro de querer borrar la asignatura {{subject_to_delete_name}}? <br>
+					Este proceso es irreversible.
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-danger" (click)="delete_subject()">Borrar asignatura</button>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
+

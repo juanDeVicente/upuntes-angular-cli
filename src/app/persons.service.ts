@@ -16,6 +16,7 @@ export class PersonsService {
 
     get_all_persons() {
         return this.http.get('http://localhost:80/careers');
+
     }
     get_person_by_name(name)
     {
@@ -26,7 +27,11 @@ export class PersonsService {
             if (this.people[i].name == name)
                 people_name.push(this.people[i]);
         }
-
         return people_name;
+
+    }
+    delete_test()
+    {
+
     }
 }

@@ -29,8 +29,8 @@
             "scripts": [
               "../upuntes-angular-cli/node_modules/jquery/dist/jquery.js",
               "../upuntes-angular-cli/node_modules/popper.js/dist/umd/popper.js",
-              "../upuntes-angular-cli/node_modules/bootstrap/dist/js/bootstrap.js"
-
+              "../upuntes-angular-cli/node_modules/bootstrap/dist/js/bootstrap.js",
+              "src/assets/js/change_modal.js"
             ],
             "es5BrowserSupport": true
           },

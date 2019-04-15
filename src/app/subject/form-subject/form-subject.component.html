@@ -1,0 +1,35 @@
+<div class="modal fade" id="AddSubjectModal" tabindex="-1" role="dialog" aria-labelledby="AddSubjectModalTitle"
+	 aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Añadir asignatura</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="modal_body_subject">
+				<form [formGroup]="subject_model" (ngSubmit)="onSubmit()">
+					<div class="form-group">
+						<select class="form-control" id="year" formControlName="year">
+							<option value="" disabled selected>Año</option> <!--placeholder-->
+							<option value="1º">1º</option>
+							<option value="2º">2º</option>
+							<option value="3º">3º</option>
+							<option value="4º">4º</option>
+							<option value="5º">5º</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" id="name" placeholder="Nombre de la asignatura" formControlName="name">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						<button type="submit" class="btn upuntes-color" [disabled]="!subject_model.valid">Añadir asignatura</button>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>
