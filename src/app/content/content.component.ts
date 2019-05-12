@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ContentService} from '../services/content/content.service';
 import {ActivatedRoute} from '@angular/router';
 import {SubjectService} from '../services/subject/subject.service';
+import {UserService} from '../services/user/user.service';
 
 @Component({
 	selector: 'app-content',
@@ -15,7 +16,11 @@ export class ContentComponent implements OnInit {
 	subject;
 	contents;
 
-	constructor(private content_service: ContentService, private subject_service: SubjectService, private route: ActivatedRoute) {
+	users_owners = {};
+
+	split:number = 4;
+
+	constructor(private content_service: ContentService, private subject_service: SubjectService, private user_service: UserService, private route: ActivatedRoute) {
 
 	}
 
@@ -35,12 +40,35 @@ export class ContentComponent implements OnInit {
 		this.content_service.get_contents_from_subject(this.id_subject).subscribe(
 			next => {
 				this.contents = next;
+				for (let content in this.contents)
+					this.get_author(this.contents[content]['id_user_owner']);
+
+				let temp = [];
+				for (let i = 0 ; i < this.contents.length ; i+=this.split)
+				{
+					console.log(this.contents.slice(i , i + this.split));
+					temp.push(this.contents.slice(i , i + this.split));
+				}
+				console.log(temp);
+				this.contents = temp
 			},
 			error1 => {
 				console.log(error1);
 			}
 		);
+	}
+	get_author(id){
 
+		if (this.users_owners[id] == undefined) {
+			this.user_service.get_user(id).subscribe(
+				next => {
+					this.users_owners[id] = next
+				},
+				error1 => {
+					console.log('No se puede recuperar el usuario con id ' + id);
+				}
+			);
+		}
 	}
 
 }

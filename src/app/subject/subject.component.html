@@ -19,7 +19,7 @@
 									<button type="button" class="btn btn-danger text-center float-xl-right float-lg-right float-sm-none float-md-none" (click)="set_subject_to_delete(subject.id_subject, subject.name)" data-toggle="modal" data-target="#delete-subject-modal">
 										<img src="assets/icons/trash-can.svg" width="24" height="24">
 									</button>
-									<button type="button" class="btn btn-warning text-center float-xl-right float-lg-right float-sm-none float-md-none">
+									<button type="button" class="btn btn-warning text-center float-xl-right float-lg-right float-sm-none float-md-none" (click)="set_subject_to_update(subject.id_subject, subject.name, subject.year)" data-toggle="modal" data-target="#update-subject-modal">
 										<img src="assets/icons/gear.svg" width="24" height="24">
 									</button>
 								</div>
@@ -33,7 +33,7 @@
 </div>
 <!--Footer-->
 <nav class="navbar" style="opacity: 0"><!--Por temas de estetica, se quita con la opaciodad pero ocupa el espacio, si tocamos la visibilidad no funciona bien el espacio-->
-	<button class="navbar-brand mx-auto upuntes-color">
+	<button class="navbar-brand">
 		Añadir asignatura
 	</button>
 </nav>
@@ -57,7 +57,7 @@
 			<div id="delete-subject-modal-body">
 				<div class="modal-body">
 					¿Estás seguro de querer borrar la asignatura {{subject_to_delete_name}}? <br>
-					Este proceso es irreversible.
+					Este proceso es <span class="text-danger">irreversible</span>.
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -67,4 +67,39 @@
 		</div>
 	</div>
 </div>
+<!--Modal edición de asignatura-->
+<div class="modal fade" id="update-subject-modal" tabindex="-1" role="dialog" aria-labelledby="AddSubjectModalTitle"
+	 aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Modificar asignatura</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="update-subject-modal-body">
+				<form [formGroup]="form_update_subject" (ngSubmit)="update_subject()">
+					<div class="form-group">
+						<select class="form-control" id="year" formControlName="year">
+							<option value="" disabled selected>Año</option> <!--placeholder-->
+							<option value="1º">1º</option>
+							<option value="2º">2º</option>
+							<option value="3º">3º</option>
+							<option value="4º">4º</option>
+							<option value="5º">5º</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" id="name" placeholder="Nombre de la asignatura" formControlName="name">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						<button type="submit" class="btn upuntes-color" [disabled]="!form_update_subject.valid">Modificar asignatura</button>
+					</div>
+				</form>
+			</div>
 
+		</div>
+	</div>
+</div>

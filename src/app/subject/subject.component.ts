@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CareerService} from '../services/career/career.service';
 import {SubjectService} from '../services/subject/subject.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Subject} from '../models/subject';
 
 declare function change_modal(modal_id, modal_body_id, data): any;
 
@@ -19,6 +21,13 @@ export class SubjectComponent implements OnInit {
 
 	id_subject_to_delete;
 	subject_to_delete_name;
+
+	id_subject_to_update;
+
+	form_update_subject = new FormGroup({
+		name: new FormControl('', [Validators.required]),
+		year: new FormControl('', [Validators.required]),
+	});
 
 	constructor(private route: ActivatedRoute, private career_service: CareerService, private subject_service: SubjectService) {
 	}
@@ -64,6 +73,25 @@ export class SubjectComponent implements OnInit {
 			error1 => {
 				console.log('Error al borrar la asignatura ' + this.subject_to_delete_name + ' con id ' + this.id_subject_to_delete);
 			},
+		);
+	}
+
+	set_subject_to_update(id_subject_to_update, subject_to_update_name, subject_to_update_year) {
+		this.id_subject_to_update = id_subject_to_update;
+		this.form_update_subject.setValue({name: subject_to_update_name, year: subject_to_update_year});
+	}
+
+	update_subject() {
+		console.log(this.form_update_subject.get('name').value);
+		this.subject_service.put_subject(new Subject(this.id_subject_to_update, this.id_career, this.form_update_subject.get('year').value, this.form_update_subject.get('name').value)).subscribe(
+			value => {
+				console.log('Asignatura actualizada');
+				change_modal('update-subject-modal', 'update-subject-modal-body', 'La asignatura ' + this.form_update_subject.get('name').value + ' ha sido actualizada');
+			},
+			error1 => {
+				console.log('error');
+				console.log(error1);
+			}
 		);
 	}
 

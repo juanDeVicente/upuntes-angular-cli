@@ -1,22 +1,85 @@
 <div class="container-fluid career-containter">
 	<div class="row no-margin-horizontal">
-		<div class="col-lg-3 col-md-6 col-sm-12 text-center" *ngFor="let career of all_careers">
-			<a routerLink="{{career.id_career}}"  title="{{career.name}}">
-				<img class="career-image rounded-circle" src="assets/{{career.img}}">
+		<div class="col-lg-3 col-md-6 col-sm-12 text-center career-element" *ngFor="let career of all_careers">
+			<a routerLink="{{career.id_career}}" title="{{career.name}}">
+				<img class="career-image rounded-circle" src="http://localhost:80/career/image/{{career.img_path}}">
 			</a>
-			<p class="d-none d-lg-block upuntes-link"><!--Display only in large-->
-				<a routerLink="{{career.id_career}}"  title="{{career.name}}">
+			<div class="d-none d-lg-block upuntes-link career-characters"><!--Display only in large-->
+				<a routerLink="{{career.id_career}}" title="{{career.name}}">
 					{{career.name}}
 				</a>
-			</p>
+			</div>
+			<div class="btn-group" *ngIf="user && user.admin == 1">
+				<button type="button" class="btn btn-danger text-center" data-toggle="modal" data-target="#delete-career-modal" (click)="set_career_to_delete(career.id_career, career.name)">
+					<img src="assets/icons/trash-can.svg" width="24" height="24">
+				</button>
+				<button type="button" class="btn btn-warning text-center" data-toggle="modal" data-target="#update-career-modal" (click)="set_career_to_update(career.id_career, career.name)">
+					<img src="assets/icons/gear.svg" width="24" height="24">
+				</button>
+			</div>
 		</div>
 	</div>
 </div>
 <!--Footer-->
-<nav class="navbar fixed-bottom upuntes-color">
-	<button class="navbar-brand mx-auto upuntes-color" type="submit" data-toggle="modal" data-target="#modalAddCareer">
+<nav class="navbar fixed-bottom upuntes-color" *ngIf="user && user.admin==1">
+	<button class="navbar-brand mx-auto upuntes-color" type="submit" data-toggle="modal"
+			data-target="#modal_add_career">
 		Añadir carrera
 	</button>
 </nav>
 <!--Modal para añadir carrera-->
 <app-form-career></app-form-career>
+<!--Modal confimración borrar asignatura-->
+<div class="modal fade" id="delete-career-modal" tabindex="-1" role="dialog" aria-labelledby="delete-subject-modal-center-title" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="delete-subject-modal-long-title">Borrar carrera</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div id="delete-subject-modal-body">
+				<div class="modal-body">
+					¿Estás seguro de querer borrar la carrera {{career_name_to_delete}}? <br>
+					Este proceso es <span class="text-danger">irreversible</span>.
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-danger" (click)="delete_career()" id="button_delete_career">Borrar carrera</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Modal edición de asignatura-->
+<div class="modal fade" id="update-career-modal" tabindex="-1" role="dialog" aria-labelledby="AddSubjectModalTitle"
+	 aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Modificar asignatura</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="update-subject-modal-body">
+				<form [formGroup]="form_update_career" (ngSubmit)="update_career()">
+					<div class="form-group">
+						<input type="text" class="form-control" id="name" placeholder="Nombre de la carrera" formControlName="career_name">
+					</div>
+					<div class="custom-file form-group">
+						<input type="file" class="custom-file-input" id="carrer_img" (change)="fileChange($event)" formControlName="image" accept="file_e">
+						<label class="custom-file-label" for="carrer_img" id="image-label">{{image_placeholder}}</label>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						<button type="submit" class="btn upuntes-color" [disabled]="!form_update_career.valid" id="btn_modify_career">Modificar carrera</button>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>
+

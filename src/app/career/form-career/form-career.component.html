@@ -1,4 +1,4 @@
-<div class="modal fade" id="modalAddCareer" tabindex="-1" role="dialog" aria-labelledby="modalAddCareerTitle"
+<div class="modal fade" id="modal_add_career" tabindex="-1" role="dialog" aria-labelledby="modalAddCareerTitle"
 	 aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
@@ -8,19 +8,21 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body">
-				<form [formGroup]="careerForm" (ngSubmit)="onSubmit()">
+			<div class="modal-body" id="modal_add_career_body">
+				<form [formGroup]="career_form" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
 					<div class="form-group">
 						<input type="text" class="form-control" id="name" placeholder="Nombre de la carrera" formControlName="career_name">
 					</div>
 					<div class="custom-file form-group">
-						<input type="file" class="custom-file-input" id="carrer_img" formControlName="image">
-						<label class="custom-file-label" for="carrer_img">Imagen carrera</label>
+						<input type="file" class="custom-file-input" id="carrer_img" (change)="fileChange($event)" formControlName="image" accept="file_e">
+						<label class="custom-file-label" for="carrer_img" id="image-label">{{image_placeholder}}</label>
 					</div>
 
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-						<button type="submit" class="btn upuntes-color" [disabled]="!careerForm.valid">Añadir carrera
+						<button type="submit" class="btn upuntes-color" [disabled]="!career_form.valid" id="button_add_career">
+							Añadir carrera
+							<img src="assets/svg/load_icon.svg" style="height: 1em; display: none" id="load_icon_add_career">
 						</button>
 					</div>
 				</form>

@@ -1,5 +1,5 @@
 export class Career {
-	constructor(public name: string, public image: File){
+	constructor(public name: string, public image){
 
 	}
 }

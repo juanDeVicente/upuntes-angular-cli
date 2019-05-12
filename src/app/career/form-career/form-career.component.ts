@@ -1,21 +1,28 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {CareerService} from '../../services/career/career.service';
+
+declare function change_modal(modal_id, modal_body_id, data): any;
 
 @Component({
 	selector: 'app-form-career',
 	templateUrl: './form-career.component.html',
 	styleUrls: ['./form-career.component.css']
 })
+
 export class FormCareerComponent implements OnInit {
 	careers_names;
 
-	careerForm = new FormGroup({
+	career_form = new FormGroup({
 		career_name: new FormControl('', [Validators.required]),
-		image: new FormControl('', [Validators.required, Validators.pattern('.*.png$|.*.jpg$|.*.jpeg$')]),
+		image: new FormControl(null, [Validators.required, Validators.pattern('.*.svg')]),
 	});
 
-	constructor(private career_service: CareerService) {
+	image: File;
+
+	image_placeholder = 'Imagen de carrera';
+
+	constructor(private career_service: CareerService, private cd: ChangeDetectorRef) {
 	}
 
 	ngOnInit(): void {
@@ -40,22 +47,34 @@ export class FormCareerComponent implements OnInit {
 		};
 	}
 
+	fileChange(event) {
+		if (event.target.files.length > 0) {
+			const file = event.target.files[0];
+			this.image = file;
+
+			this.image_placeholder = file.name;
+		}
+	}
+
 	/**
 	 * Accion para realizar cuando se pulse el botón de submit
 	 */
 	onSubmit() {
-		console.log(this.careerForm.value)
-		/*
-		this.career_service.create_career(this.careerForm.value).subscribe(
+		(<HTMLInputElement> document.getElementById('button_add_career')).disabled = true;
+		document.getElementById('load_icon_add_career').style.display = 'inline';
+		let form_data = new FormData();
+		form_data.append('career_name', this.career_form.get('career_name').value);
+		form_data.append('image', this.image);
+		this.career_service.post_career(form_data).subscribe(
 			(career) => {
-				console.log('Carrera ' + career + ' insertada');
+				change_modal('modal_add_career', 'modal_add_career_body', 'Se ha añadido la carrera correctamente');
+				console.log('Carrera ' + career.toString() + ' insertada');
 			},
 			(error1) => {
-				console.log('Error al insertar la careera: ' + this.careerForm.value);
-				console.log('Error: ' + error1)
+				console.log('Error al insertar la careera: ' + this.career_form.value);
+				console.log(error1);
 			}
 		);
-		*/
 	}
 
 }

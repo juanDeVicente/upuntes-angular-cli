@@ -1,0 +1,17 @@
+.content-row{
+    margin: 2% 2%;
+}
+.upuntes-link>a:link {
+    color: #233365;
+}
+.upuntes-link>a:visited {
+    color: #233365;
+}
+.upuntes-link>a:hover {
+    color: #233365;
+    text-decoration: none;
+}
+.upuntes-link>a:active {
+    color: #233365;
+    text-decoration: none;
+}
