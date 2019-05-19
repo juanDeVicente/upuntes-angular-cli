@@ -29,6 +29,7 @@ export class FormSubjectComponent implements OnInit {
 	}
 
 	onSubmit(){
+		(<HTMLInputElement>document.getElementById('add-subject-modal-button')).disabled = true;
 		const subject = new Subject(null, this.id_career, this.subject_model.value['year'], this.subject_model.value['name']);
 		this.subject_service.post_subject(subject).subscribe(
 			value => {
