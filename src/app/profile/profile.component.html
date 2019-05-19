@@ -11,34 +11,34 @@
 	</div>
 	<div class="row">
 		<div class="col-sm">
-			<h2>Contenidos subidos:</h2>
-			<div style="overflow-y: auto; height: 75%; overflow-x: hidden" *ngIf="contents && contents.length > 0">
+			<div style="overflow-y: auto; overflow-x: hidden" *ngIf="contents && contents.length > 0">
+				<h2>Contenidos subidos:</h2>
 				<div class="row">
-					<h5 class="col-4">
+					<b class="col-lg-4 col-xl-4 col-md-4 col-sm-8 col-sm-8">
 						Nombre del contenido
-					</h5>
-					<h5 class="col-4 d-none d-lg-block d-xl-block">
+					</b>
+					<b class="col-lg-4 col-xl-4 d-none d-lg-block d-xl-block">
 						Carrera
-					</h5>
-					<h5 class="col-2 d-none d-lg-block d-xl-block">
+					</b>
+					<b class="col-lg-2 col-xl-2 d-none d-lg-block d-xl-block">
 						Asignatura
-					</h5>
-					<h5 class="col-2">
+					</b>
+					<b class="col-lg-2 col-xl-2 col-md-4 col-sm-4">
 						Acciones
-					</h5>
+					</b>
 				</div>
 				<div class="row report-row bg-dark text-white border border-light" *ngFor="let content of contents; let i = index">
-					<div class="col-4 icon">
+					<div class="col-lg-4 col-xl-4 col-md-4 col-sm-8 col-sm-8 icon">
 						<span [ngClass]="get_icon(content.content_filename)"></span>
 						<b> {{content.content_name}}</b>
 					</div>
 					<div class="col-4 d-none d-lg-block d-xl-block">
 						{{content.career_name}}
 					</div>
-					<div class="col-2 d-none d-lg-block d-xl-block">
+					<div class="col-lg-2 col-xl-2 d-none d-lg-block d-xl-block">
 						{{content.subject_name}}
 					</div>
-					<div class="col-2 btn-group">
+					<div class="col-lg-2 col-xl-2 col-md-4 col-sm-4 btn-group">
 						<button class="btn upuntes-color">
 							<img src="assets/icons/report.svg" width="28" height="28"
 								 (click)="set_content_to_report(content.id_content, content.content_name)"
