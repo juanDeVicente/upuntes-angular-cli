@@ -2,8 +2,8 @@
 	<div class="row" *ngIf="user">
 		<div class="col">
 		<b class="h1">{{ user.email }}
-			<button class="btn btn-danger" data-toggle="modal" data-target="#expel-user-modal" style="padding: 0; height: 70%">
-				<img class="image-icon-button" src="assets/icons/trash-can.svg" style="height: 20px; width: auto">
+			<button class="btn btn-danger" data-toggle="modal" data-target="#expel-user-modal">
+				<img class="img-fluid" src="assets/icons/trash-can.svg" style="width: auto; height: 1em;">
 			</button>
 		</b>
 
@@ -17,10 +17,10 @@
 					<h5 class="col-4">
 						Nombre del contenido
 					</h5>
-					<h5 class="col-4">
+					<h5 class="col-4 d-none d-lg-block d-xl-block">
 						Carrera
 					</h5>
-					<h5 class="col-2">
+					<h5 class="col-2 d-none d-lg-block d-xl-block">
 						Asignatura
 					</h5>
 					<h5 class="col-2">
@@ -32,10 +32,10 @@
 						<span [ngClass]="get_icon(content.content_filename)"></span>
 						<b> {{content.content_name}}</b>
 					</div>
-					<div class="col-4">
+					<div class="col-4 d-none d-lg-block d-xl-block">
 						{{content.career_name}}
 					</div>
-					<div class="col-2">
+					<div class="col-2 d-none d-lg-block d-xl-block">
 						{{content.subject_name}}
 					</div>
 					<div class="col-2 btn-group">
