@@ -4,7 +4,6 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './header/header.component';
 import {ContentComponent} from './content/content.component';
-import {PersonsService} from './persons.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {CareerComponent} from './career/career.component';
@@ -22,6 +21,11 @@ import { FormUploadComponent } from './content/form-upload/form-upload.component
 import { NoteComponent } from './note/note.component';
 import { RegistryComponent } from './login/registry/registry.component';
 import {TokenInterceptor} from './token.interceptor';
+import {ReportService} from './services/report/report.service';
+import { FinishRegistryComponent } from './finish-registry/finish-registry.component';
+import {RegistryService} from './services/registry/registry.service';
+import {IconsService} from './services/icons/icons.service';
+import {BreadcrumbService} from './services/breadcrumb/breadcrumb.service';
 
 @NgModule({
 	declarations: [
@@ -36,7 +40,8 @@ import {TokenInterceptor} from './token.interceptor';
 		ProfileComponent,
 		FormUploadComponent,
 		NoteComponent,
-		RegistryComponent
+		RegistryComponent,
+		FinishRegistryComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -46,11 +51,14 @@ import {TokenInterceptor} from './token.interceptor';
 		ReactiveFormsModule
 	],
 	providers: [
-		PersonsService,
 		CareerService,
 		SubjectService,
 		ContentService,
 		UserService,
+		ReportService,
+		RegistryService,
+		IconsService,
+		BreadcrumbService,
 		{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
 		],
 	bootstrap: [AppComponent]

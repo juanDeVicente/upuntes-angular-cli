@@ -1,6 +1,18 @@
 <div class="container-fluid career-containter">
 	<div class="row no-margin-horizontal">
 		<div class="col-lg-3 col-md-6 col-sm-12 text-center career-element" *ngFor="let career of all_careers">
+			<div class="btn-group float-right" *ngIf="user && user.admin == 1">
+				<button type="button" class="btn btn-warning text-center" data-toggle="modal"
+						data-target="#update-career-modal"
+						(click)="set_career_to_update(career.id_career, career.name)">
+					<img src="assets/icons/gear.svg" width="24" height="24">
+				</button>
+				<button type="button" class="btn btn-danger text-center" data-toggle="modal"
+						data-target="#delete-career-modal"
+						(click)="set_career_to_delete(career.id_career, career.name)">
+					<img src="assets/icons/trash-can.svg" width="24" height="24">
+				</button>
+			</div>
 			<a routerLink="{{career.id_career}}" title="{{career.name}}">
 				<img class="career-image rounded-circle" src="http://localhost:80/career/image/{{career.img_path}}">
 			</a>
@@ -9,28 +21,26 @@
 					{{career.name}}
 				</a>
 			</div>
-			<div class="btn-group" *ngIf="user && user.admin == 1">
-				<button type="button" class="btn btn-danger text-center" data-toggle="modal" data-target="#delete-career-modal" (click)="set_career_to_delete(career.id_career, career.name)">
-					<img src="assets/icons/trash-can.svg" width="24" height="24">
-				</button>
-				<button type="button" class="btn btn-warning text-center" data-toggle="modal" data-target="#update-career-modal" (click)="set_career_to_update(career.id_career, career.name)">
-					<img src="assets/icons/gear.svg" width="24" height="24">
-				</button>
-			</div>
 		</div>
 	</div>
 </div>
+<nav class="navbar" *ngIf="user && user.admin == 1" style="opacity: 0">
+	<button class="navbar-brand mx-auto" type="submit">
+		Añadir carrera
+	</button>
+</nav>
 <!--Footer-->
-<nav class="navbar fixed-bottom upuntes-color" *ngIf="user && user.admin==1">
+<nav class="navbar fixed-bottom upuntes-color" *ngIf="user && user.admin == 1">
 	<button class="navbar-brand mx-auto upuntes-color" type="submit" data-toggle="modal"
 			data-target="#modal_add_career">
 		Añadir carrera
 	</button>
 </nav>
 <!--Modal para añadir carrera-->
-<app-form-career></app-form-career>
-<!--Modal confimración borrar asignatura-->
-<div class="modal fade" id="delete-career-modal" tabindex="-1" role="dialog" aria-labelledby="delete-subject-modal-center-title" aria-hidden="true">
+<app-form-career *ngIf="user && user.admin == 1"></app-form-career>
+<!--Modal confimración borrar carrera-->
+<div class="modal fade" id="delete-career-modal" tabindex="-1" role="dialog"
+	 aria-labelledby="delete-subject-modal-center-title" aria-hidden="true" *ngIf="user && user.admin == 1">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -46,15 +56,17 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-					<button type="button" class="btn btn-danger" (click)="delete_career()" id="button_delete_career">Borrar carrera</button>
+					<button type="button" class="btn btn-danger" (click)="delete_career()" id="button_delete_career">
+						Borrar carrera
+					</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<!--Modal edición de asignatura-->
+<!--Modal edición de carrera-->
 <div class="modal fade" id="update-career-modal" tabindex="-1" role="dialog" aria-labelledby="AddSubjectModalTitle"
-	 aria-hidden="true">
+	 aria-hidden="true" *ngIf="user && user.admin == 1">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -63,18 +75,22 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body" id="update-subject-modal-body">
-				<form [formGroup]="form_update_career" (ngSubmit)="update_career()">
+			<div class="modal-body" id="update-career-modal-body">
+				<form [formGroup]="form_update_career" (ngSubmit)="update_career()" enctype="multipart/form-data">
 					<div class="form-group">
-						<input type="text" class="form-control" id="name" placeholder="Nombre de la carrera" formControlName="career_name">
+						<input type="text" class="form-control" id="name" placeholder="Nombre de la carrera"
+							   formControlName="career_name">
 					</div>
 					<div class="custom-file form-group">
-						<input type="file" class="custom-file-input" id="carrer_img" (change)="fileChange($event)" formControlName="image" accept="file_e">
+						<input type="file" class="custom-file-input" id="carrer_img" (change)="fileChange($event)"
+							   formControlName="image" accept="file_e">
 						<label class="custom-file-label" for="carrer_img" id="image-label">{{image_placeholder}}</label>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-						<button type="submit" class="btn upuntes-color" [disabled]="!form_update_career.valid" id="btn_modify_career">Modificar carrera</button>
+						<button type="submit" class="btn upuntes-color" [disabled]="!form_update_career.valid"
+								id="btn_modify_career">Modificar carrera
+						</button>
 					</div>
 				</form>
 			</div>

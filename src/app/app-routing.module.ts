@@ -6,7 +6,7 @@ import {ContentComponent} from './content/content.component';
 import {LoginComponent} from './login/login.component';
 import {ProfileComponent} from './profile/profile.component';
 import {NoteComponent} from './note/note.component';
-import {RegistryComponent} from './login/registry/registry.component';
+import {FinishRegistryComponent} from './finish-registry/finish-registry.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -15,7 +15,7 @@ const routes: Routes = [
   {path: 'careers/:id_career/:id_subject', component: ContentComponent},
   {path: 'profile/:id_user', component: ProfileComponent},
   {path: 'note/:id_content', component: NoteComponent},
-  {path: 'registry/:token', component: RegistryComponent}
+  {path: 'registry/:token', component: FinishRegistryComponent}
 ];
 
 @NgModule({

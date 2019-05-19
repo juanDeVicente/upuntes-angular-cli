@@ -24,13 +24,15 @@
             ],
             "styles": [
               "src/styles.css",
-              "../upuntes-angular-cli/node_modules/bootstrap/dist/css/bootstrap.css"
+              "../upuntes-angular-cli/node_modules/bootstrap/dist/css/bootstrap.css",
+              "../upuntes-angular-cli/node_modules/file-icons-js/css/style.css"
             ],
             "scripts": [
               "../upuntes-angular-cli/node_modules/jquery/dist/jquery.min.js",
               "../upuntes-angular-cli/node_modules/popper.js/dist/umd/popper.min.js",
               "../upuntes-angular-cli/node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "src/assets/js/change_modal.js"
+              "src/assets/js/change_modal.js",
+              "../upuntes-angular-cli/node_modules/file-icons-js/index.js"
             ],
             "es5BrowserSupport": true
           },

@@ -27,6 +27,7 @@ export class UserService {
 	login(email, password) {
 		return this.http.post<User>('http://localhost:80/login', {email: email, password: password}).map(
 			user => {
+				console.log(user);
 				localStorage.setItem('logged_user', JSON.stringify(user));
 				this.logged_user.next(user);
 			},
@@ -36,5 +37,8 @@ export class UserService {
 	logout() {
 		localStorage.removeItem('logged_user');
 		this.logged_user.next(null);
+	}
+	delete_user(id_user) {
+		return this.http.delete('http://localhost:80/user/' + id_user);
 	}
 }

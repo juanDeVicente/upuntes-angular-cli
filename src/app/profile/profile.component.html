@@ -1,5 +1,153 @@
+<div class="container-fluid">
+	<div class="row" *ngIf="user">
+		<div class="col">
+		<b class="h1">{{ user.email }}
+			<button class="btn btn-danger" data-toggle="modal" data-target="#expel-user-modal" style="padding: 0; height: 70%">
+				<img class="image-icon-button" src="assets/icons/trash-can.svg" style="height: 20px; width: auto">
+			</button>
+		</b>
 
-<div class="container">
-
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm">
+			<h2>Contenidos subidos:</h2>
+			<div style="overflow-y: auto; height: 75%; overflow-x: hidden" *ngIf="contents && contents.length > 0">
+				<div class="row">
+					<h5 class="col-4">
+						Nombre del contenido
+					</h5>
+					<h5 class="col-4">
+						Carrera
+					</h5>
+					<h5 class="col-2">
+						Asignatura
+					</h5>
+					<h5 class="col-2">
+						Acciones
+					</h5>
+				</div>
+				<div class="row report-row bg-dark text-white border border-light" *ngFor="let content of contents; let i = index">
+					<div class="col-4 icon">
+						<span [ngClass]="get_icon(content.content_filename)"></span>
+						<b> {{content.content_name}}</b>
+					</div>
+					<div class="col-4">
+						{{content.career_name}}
+					</div>
+					<div class="col-2">
+						{{content.subject_name}}
+					</div>
+					<div class="col-2 btn-group">
+						<button class="btn upuntes-color">
+							<img src="assets/icons/report.svg" width="28" height="28"
+								 (click)="set_content_to_report(content.id_content, content.content_name)"
+								 data-toggle="modal" data-target="#report-content-modal">
+						</button>
+						<a class="btn upuntes-color"
+						   href="http://localhost:80/download/{{content.id_content}}" style="margin-left: 2%; margin-right: 2%">
+							<img src="assets/icons/download.svg" width="28" height="28">
+						</a>
+						<button type="button" class="btn btn-danger text-center" *ngIf="logged_user && (logged_user.admin == 1 || logged_user.id_user == content.id_user_owner)" data-toggle="modal" data-target="#delete-content-modal">
+							<img class="image-icon-button" src="assets/icons/trash-can.svg" style="height: 24px; width: auto">
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-
+<!--Modal confimración borrar usuario-->
+<div class="modal fade" id="expel-user-modal" tabindex="-1" role="dialog"
+	 aria-labelledby="delete-subject-modal-center-title" aria-hidden="true">
+	<div class="modal-lg modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="expel-user-modal-long-title">Borrar contenido</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div id="expel-user-modal-body">
+				<div class="modal-body" *ngIf="user">
+					¿Estás seguro de querer borrar al usuario {{user.email}}? <br>
+					Este proceso es <span class="text-danger">irreversible</span>.
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-danger" (click)="delete_user()" id="expel-user-modal-button">
+						Borrar usuario
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Modal denunciar contenido-->
+<div class="modal fade" id="report-content-modal" tabindex="-1" role="dialog"
+	 aria-labelledby="delete-subject-modal-center-title" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="report-content-modal-long-title">Reportar {{content_name_to_report}}</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div id="report-content-modal-body">
+				<form [formGroup]="report_form" (ngSubmit)="report_content()">
+					<div class="modal-body form-group" formGroupName="checkboxGroup">
+						<div class="form-check">
+							<input type="checkbox" class="form-check-input" id="is_bad_content"
+								   formControlName="is_bad_content">
+							<label class="form-check-label" for="is_bad_content">Contenido no apropiado</label>
+						</div>
+						<div class="form-check">
+							<input type="checkbox" class="form-check-input" id="is_wrong_content"
+								   formControlName="is_wrong_content">
+							<label class="form-check-label" for="is_wrong_content">Contenido no correcto</label>
+						</div>
+						<div class="form-check">
+							<input type="checkbox" class="form-check-input" id="no_subject_content"
+								   formControlName="no_subject_content">
+							<label class="form-check-label" for="no_subject_content">Contenido no pertenece a la
+								asignatura</label>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						<button type="submit" class="btn btn-danger" id="report_content_button"
+								[disabled]="!report_form.valid">Reportar contenido
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Modal confimración borrar contenido-->
+<div class="modal fade" id="delete-content-modal" tabindex="-1" role="dialog"
+	 aria-labelledby="delete-subject-modal-center-title" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="delete-content-modal-long-title">Borrar usuario</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div id="delete-content-modal-body">
+				<div class="modal-body">
+					¿Estás seguro de querer borrar el contenido {{content_name_to_delete}}? <br>
+					Este proceso es <span class="text-danger">irreversible</span>.
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-danger" (click)="delete_content()" id="delete_content_button">
+						Borrar contenido
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

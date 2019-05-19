@@ -1,0 +1,42 @@
+<!--Modal para subir un contenido a la plataforma-->
+<div class="modal fade" id="upload-file-modal" tabindex="-1" role="dialog"
+	 aria-labelledby="delete-subject-modal-center-title" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="upload-file-modal-long-title">Subir contenido</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form [formGroup]="form_update" (ngSubmit)="onSubmit()">
+				<div class="modal-body" id="upload-file-modal-modal-body">
+					<div class="form-group">
+						<div class="custom-file form-group">
+							<input type="file" class="custom-file-input" id="content" formControlName="content_file" (change)="fileChange($event)">
+							<label class="custom-file-label" for="content">{{content_placeholder}}</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<select class="form-control" id="period" formControlName="period">
+							<option value="" disabled selected>Año académico</option> <!--placeholder-->
+							<option value="2013-2014">2013-2014</option>
+							<option value="2014-2015">2014-2015</option>
+							<option value="2015-2016">2015-2016</option>
+							<option value="2016-2017">2016-2017</option>
+							<option value="2017-2018">2017-2018</option>
+							<option value="2018-2019">2018-2019</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<input type="text" id="content_name" class="form-control" placeholder="Nombre" formControlName="content_name">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						<button type="submit" class="btn upuntes-color" [disabled]="!form_update.valid" id="upload-content-button">Subir contenido</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

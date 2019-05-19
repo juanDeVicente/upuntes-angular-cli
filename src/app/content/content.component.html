@@ -1,51 +1,121 @@
-<div class="mx-auto">
-	<nav class="navbar sticky-top navbar-expand-md navbar-dark bg-dark" style="font-size: 16pt;top: 56px">
-		<div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-			<ul class="navbar-nav">
-				<a routerLink="/careers/{{id_career}}/" class="nav-item" style="color: #ffffff; font-size: 24pt">
-					{{subject.name}}
-				</a>
-			</ul>
-		</div>
-		<div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item">
-					<button class="btn btn-primary" style="font-size: 16pt" data-toggle="modal"
-							data-target="#upload-file-modal">Subir archivo
-					</button>
-				</li>
-			</ul>
-		</div>
-	</nav>
-</div>
 <ng-container *ngFor="let row of contents">
-	<div class="card-deck content-row">
-		<div class="card" *ngFor="let content of row">
-			<div class="card-body row">
-				<div class="col-3">
-					<img class="" src="..." alt="Card image cap">
+	<div class="row" style="margin-left: 1%; margin-right: 1%">
+		<div class="col-lg-4 col-sm-1 col-md-4 col-xl-4" *ngFor="let content of row"
+			 style="margin-bottom: 1%; margin-top: 1%">
+			<div class="card">
+				<div class="card-body row">
+					<div class="col-3 icon-col">
+						<span [ngClass]="get_icon(content.content_filename)"></span>
+					</div>
+					<div class="col-9">
+						<button type="button" class="btn btn-danger text-center float-right d-none d-lg-block d-xl-block"
+								*ngIf="user && user.admin == 1 || user.email == content.email"
+								(click)="set_content_to_delete(content.id_content, content.content_name)"
+								data-toggle="modal" data-target="#delete-content-modal">
+							<img src="assets/icons/trash-can.svg" width="24" height="24">
+						</button>
+						<b class="card-title">{{content.content_name}}</b>
+						<p class="card-text upuntes-link" style="font-size: 0.8em">
+							<a href="/profile/{{content.id_user_owner}}" class="card-text"
+							   target="_blank">{{content.email}}</a><br>
+							{{content.update_date}}<br>
+							{{content.period}}
+						</p>
+					</div>
 				</div>
-				<div class="col-9">
-					<h5 class="card-title">{{content.content_name}}</h5>
-					<p class="card-text upuntes-link">
-						<a href="#" class="card-text" target="_blank">{{users_owners[content.id_user_owner].email}}</a><br>
-						{{content.update_date}}
-					</p>
+				<div class="card-footer text-center upuntes-color">
+					<button class="btn border-light upuntes-color" style="margin-right: 5%">
+						<img src="assets/icons/report.svg" width="30" height="30"
+							 (click)="set_content_to_report(content.id_content, content.content_name)"
+							 data-toggle="modal" data-target="#report-content-modal">
+					</button>
+					<a class="btn border-light upuntes-color"
+					   href="http://localhost:80/download/{{content.id_content}}">
+						<img src="assets/icons/download.svg" width="30" height="30">
+					</a>
 				</div>
-
-			</div>
-			<div class="card-footer text-center">
-				<button class="btn btn-danger">
-					<img src="assets/icons/report.svg" width="30" height="30">
-				</button>
-				<button class="btn btn-warning" style="margin-left: 2%; margin-right: 2%">
-					<img src="assets/icons/eye.svg" width="30" height="30">
-				</button>
-				<button class="btn btn-success">
-					<img src="assets/icons/download.svg" width="30" height="30">
-				</button>
 			</div>
 		</div>
 	</div>
 </ng-container>
+<!--Footer-->
+<nav class="navbar" style="opacity: 0"><!--Por temas de estetica, se quita con la opaciodad pero ocupa el espacio, si tocamos la visibilidad no funciona bien el espacio-->
+	<button class="navbar-brand">
+		Añadir asignatura
+	</button>
+</nav>
+<nav class="navbar fixed-bottom upuntes-color">
+	<button class="navbar-brand mx-auto upuntes-color" type="submit" data-toggle="modal"
+			data-target="#upload-file-modal" style="color: whitesmoke">
+		Subir contenido
+	</button>
+</nav>
 <app-form-upload></app-form-upload>
+<!--Modal confimración borrar contenido-->
+<div class="modal fade" id="delete-content-modal" tabindex="-1" role="dialog"
+	 aria-labelledby="delete-subject-modal-center-title" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="delete-content-modal-long-title">Borrar asignatura</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div id="delete-content-modal-body">
+				<div class="modal-body">
+					¿Estás seguro de querer borrar el contenido {{content_name_to_delete}}? <br>
+					Este proceso es <span class="text-danger">irreversible</span>.
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-danger" (click)="delete_content()" id="delete_content_button">
+						Borrar contenido
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Modal denunciar contenido-->
+<div class="modal fade" id="report-content-modal" tabindex="-1" role="dialog"
+	 aria-labelledby="delete-subject-modal-center-title" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="report-content-modal-long-title">Reportar {{content_name_to_report}}</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div id="report-content-modal-body">
+				<form [formGroup]="report_form" (ngSubmit)="report_content()">
+					<div class="modal-body form-group" formGroupName="checkboxGroup">
+						<div class="form-check">
+							<input type="checkbox" class="form-check-input" id="is_bad_content"
+								   formControlName="is_bad_content">
+							<label class="form-check-label" for="is_bad_content">Contenido no apropiado</label>
+						</div>
+						<div class="form-check">
+							<input type="checkbox" class="form-check-input" id="is_wrong_content"
+								   formControlName="is_wrong_content">
+							<label class="form-check-label" for="is_wrong_content">Contenido no correcto</label>
+						</div>
+						<div class="form-check">
+							<input type="checkbox" class="form-check-input" id="no_subject_content"
+								   formControlName="no_subject_content">
+							<label class="form-check-label" for="no_subject_content">Contenido no pertenece a la
+								asignatura</label>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						<button type="submit" class="btn btn-danger" id="report_content_button"
+								[disabled]="!report_form.valid">Reportar contenido
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

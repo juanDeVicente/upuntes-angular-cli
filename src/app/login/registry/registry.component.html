@@ -1,28 +1,32 @@
 <!--Modal para registrarse-->
 <div class="modal fade" id="register_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Registrarse</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form [formGroup]="form_email" (submit)="onSubmit()">
-        <div class="modal-body" id="modal_body_register"><!-- Para futuros cambios mediante angular.js -->
-          <div class="form-group">
-            <input type="text" class="form-control placeholder-cursive" id="register_email" placeholder="Dirección de correo" formControlName="email">
-          </div>
-          <div class="form-group">
-            <input type="password" class="form-control placeholder-cursive" placeholder="Constraseña" formControlName="password">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-primary" [disabled]="!form_email.valid" >Registrarse</button>
-        </div>
-      </form>
-    </div>
-  </div>
+	 aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Registrarse</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="modal_body_register">
+				<form [formGroup]="form_email" (submit)="onSubmit()">
+					<div class="form-group">
+						<input type="text" class="form-control placeholder-cursive" id="register_email"
+							   placeholder="Dirección de correo" formControlName="email">
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control placeholder-cursive" placeholder="Constraseña"
+							   formControlName="password">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						<button type="submit" class="btn upuntes-color" [disabled]="!form_email.valid"
+								id="btn-registry">Registrarse
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>

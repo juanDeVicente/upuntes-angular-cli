@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
 		document.getElementById('load_icon_login').style.display = 'inline';
 		this.user_service.login(this.user_form.get('email').value, this.user_form.get('password').value).subscribe(
 			next => {
+				console.log(next);
 				this.router.navigateByUrl('/careers');
 			},
 			error1 => {

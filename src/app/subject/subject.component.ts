@@ -1,9 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CareerService} from '../services/career/career.service';
 import {SubjectService} from '../services/subject/subject.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Subject} from '../models/subject';
+import {User} from '../models/user';
+import {UserService} from '../services/user/user.service';
+import {BreadcrumbService} from '../services/breadcrumb/breadcrumb.service';
 
 declare function change_modal(modal_id, modal_body_id, data): any;
 
@@ -14,6 +17,8 @@ declare function change_modal(modal_id, modal_body_id, data): any;
 })
 
 export class SubjectComponent implements OnInit {
+
+	user:User;
 
 	id_career;
 	career;
@@ -29,11 +34,24 @@ export class SubjectComponent implements OnInit {
 		year: new FormControl('', [Validators.required]),
 	});
 
-	constructor(private route: ActivatedRoute, private career_service: CareerService, private subject_service: SubjectService) {
+	constructor(private route: ActivatedRoute, private career_service: CareerService, private subject_service: SubjectService, private user_service: UserService, private router: Router, private breadcrumb_service: BreadcrumbService) {
 	}
 
 	ngOnInit() {
+
+		this.user_service.logged_user.asObservable().subscribe(
+			user => {
+				this.user = user;
+				if (!this.user) {
+					this.router.navigateByUrl('');
+				}
+			}
+		);
+
 		this.id_career = this.route.snapshot.paramMap.get('id_career');
+		this.breadcrumb_service.set_career(this.id_career);
+		this.breadcrumb_service.subject = undefined;
+
 		this.career_service.get_career(this.id_career).subscribe(
 			career => {
 				this.career = career;

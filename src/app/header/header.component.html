@@ -1,8 +1,109 @@
-<nav class="navbar navbar-expand-lg sticky-top upuntes-color">
+<nav class="navbar navbar-dark navbar-expand-lg sticky-top upuntes-color center">
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
 	<a class="navbar-brand" routerLink="/careers">
 		<img src="assets/Upuntes_Logo.svg" width="100" height="30" alt="">
 	</a>
-	<ul class="navbar-nav ml-auto" *ngIf="user">
-		<button class="btn btn-light" type="button" (click)="logout()">Cerrar Sesión</button>
-	</ul>
+	<ol class="breadcrumb list-inline d-none d-lg-inline-block d-xl-inline-block"
+		style=" margin: 0 7px; background-color: #233365;" *ngIf="breadcrumb_service.career">
+		<li class="breadcrumb-item {{breadcrumb_service.subject == undefined? 'active': ''}} d-none d-lg-inline-block d-xl-inline-block">
+			<a routerLink="careers/{{breadcrumb_service.career.id_career}}"
+			   *ngIf="breadcrumb_service.subject != undefined; else disabled">
+				{{breadcrumb_service.career.name}}
+			</a>
+			<ng-template #disabled>
+				<div style="color: whitesmoke">
+					{{breadcrumb_service.career.name}}
+				</div>
+			</ng-template>
+		</li>
+		<li class="breadcrumb-item active d-none d-lg-inline-block d-xl-inline-block" *ngIf="breadcrumb_service.subject"
+			style="color: whitesmoke">
+			{{breadcrumb_service.subject.name}}
+		</li>
+	</ol>
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav ml-auto user-buttons" *ngIf="user">
+			<li *ngIf="user.admin == 1" class="d-none d-lg-block d-xl-block">
+				<button class="btn upuntes-color text-center" style="border-color: whitesmoke" data-toggle="modal"
+						data-target="#show_reports_modal">
+					<span class="badge badge-warning badge-pill" style="width: 30px; height: 30px; font-size: 1em"
+						  *ngIf="reports">{{reports.length}}</span>
+				</button>
+				<span class="d-lg-none text-collapsed">Contenidos reportados</span>
+			</li>
+			<li class="ml-lg-2 ml-xl-2">
+				<a class="btn border-light upuntes-color" title="Ver tu perfil" routerLink="profile/{{user.id_user}}">
+					<img src="assets/icons/profile.svg" width="30" height="30">
+				</a>
+				<span class="d-lg-none text-collapsed">Ver tu perfil</span>
+			</li>
+			<li class="ml-lg-2 ml-xl-2">
+				<a class="btn border-light upuntes-color" (click)="logout()" title="Cerrar sesión">
+					<img src="assets/icons/logout.svg" width="30" height="30">
+				</a>
+				<span class="d-lg-none text-collapsed">Cerrar sesión</span>
+			</li>
+		</ul>
+	</div>
 </nav>
+<div class="modal fade" id="show_reports_modal" tabindex="-1" role="dialog" aria-labelledby="show_reports_modal_title"
+	 aria-hidden="true">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Reportes</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="show_reports_modal_body">
+				<ng-container *ngIf="reports && reports.length > 0">
+					<div class="row">
+						<h5 class="col-4">
+							Nombre del contenido
+						</h5>
+						<h5 class="col-4 d-none d-lg-block d-xl-block">
+							Carrera
+						</h5>
+						<h5 class="col-2 d-none d-lg-block d-xl-block">
+							Asignatura
+						</h5>
+						<h5 class="col-2">
+							Acciones
+						</h5>
+					</div>
+					<div class="row report-row" *ngFor="let report of reports; let i = index">
+						<div class="col-4 icon">
+							<span [ngClass]="get_icon(report.content_filename)"> </span>
+							<a href="http://localhost:80/download/{{report.id_content}}">{{report.content_name}}</a>
+						</div>
+						<div class="col-4 d-none d-lg-block d-xl-block">
+							{{report.career_name}}
+						</div>
+						<div class="col-2 d-none d-lg-block d-xl-block">
+							{{report.subject_name}}
+						</div>
+						<div class="col-1 btn-group-report">
+							<button type="button" class="btn btn-danger text-center" (click)="remove_content(i)">
+								<img class="image-icon-button" src="assets/icons/trash-can.svg">
+							</button>
+							<button class="btn btn-success text-center" (click)="remove_report(i)">
+								<img class="image-icon-button" src="assets/icons/approve.svg">
+							</button>
+						</div>
+					</div>
+				</ng-container>
+				<div *ngIf="reports && reports.length == 0" class="row">
+					<h5 class="col-12">No hay reportes disponibles</h5>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+			</div>
+
+		</div>
+	</div>
+</div>

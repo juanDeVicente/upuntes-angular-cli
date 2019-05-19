@@ -27,4 +27,8 @@ export class CareerService
 	{
 		return this.http.delete('http://localhost:80/career/' + id_career);
 	}
+	update_career(id_career, career: FormData)
+	{
+		return this.http.post('http://localhost:80/career/' + id_career, career);
+	}
 }

@@ -1,0 +1,29 @@
+.user-buttons>li{
+    margin: 1% 0;
+}
+.text-collapsed{
+    margin-left: 0.5%;
+}
+.report-row>div{
+    font-size: 0.9em;
+}
+.icon>span, .icon>span:before{
+    font-size: 1em;
+}
+.btn-group-report>button{
+    font-size: 1em;
+    margin-left: 2%;
+    padding: 0;
+}
+.image-icon-button{
+    height: 1em;
+    width: auto;
+}
+.nav.nav-center {
+    margin:0;
+    float:none;
+}
+
+.navbar-inner{
+    text-align:center;
+}

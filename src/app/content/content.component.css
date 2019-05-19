@@ -15,3 +15,14 @@
     color: #233365;
     text-decoration: none;
 }
+.upuntes-color {
+    color: #f5f5f5;
+    background-color: #233365;
+}
+.icon-col>span{
+    position: absolute;
+}
+.icon-col>span::before{
+    position: absolute;
+    font-size: 4em;
+}

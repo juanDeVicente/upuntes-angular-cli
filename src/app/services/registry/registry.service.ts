@@ -9,7 +9,7 @@ export class RegistryService
 	constructor(private http: HttpClient) {
 	}
 
-	public post_registry(email) {
-		return this.http.post('http://localhost:80/registry', {email: email});
+	public finish_registry(token) {
+		return this.http.get('http://localhost:80/registry/' + token);
 	}
 }

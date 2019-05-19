@@ -1,6 +1,6 @@
 <div id="accordion">
 	<ng-container *ngFor="let subjects of subjects_per_year; let i = index">
-		<div class="card">
+		<div class="card mx-auto w-lg-90">
 			<button class="btn collapsed btn-block year upuntes-color" data-toggle="collapse" attr.data-target="#collapse{{i}}" aria-expanded="true" attr.aria-controls="collapse{{i}}" id="heading{{i}}">
 					{{i + 1}}º
 			</button>
@@ -37,7 +37,7 @@
 		Añadir asignatura
 	</button>
 </nav>
-<nav class="navbar fixed-bottom upuntes-color">
+<nav class="navbar fixed-bottom upuntes-color" *ngIf="user && user.admin == 1">
 	<button class="navbar-brand mx-auto upuntes-color" type="submit" data-toggle="modal" data-target="#AddSubjectModal" style="color: whitesmoke">
 		Añadir asignatura
 	</button>

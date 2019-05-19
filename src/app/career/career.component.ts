@@ -4,6 +4,9 @@ import {User} from '../models/user';
 import {UserService} from '../services/user/user.service';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {BreadcrumbService} from '../services/breadcrumb/breadcrumb.service';
+
+declare function change_modal(modal_id, modal_body_id, data): any;
 
 @Component({
 	selector: 'app-career',
@@ -26,10 +29,13 @@ export class CareerComponent implements OnInit {
 		image: new FormControl(null, [Validators.required, Validators.pattern('.*.svg')]),
 	});
 
-	constructor(private careerService: CareerService, private user_service: UserService, private router: Router) {
+	constructor(private careerService: CareerService, private user_service: UserService, private router: Router, private breadcrumb_service: BreadcrumbService) {
 	}
 
 	ngOnInit() {
+
+		this.breadcrumb_service.career = undefined;
+		this.breadcrumb_service.subject = undefined;
 		this.user_service.logged_user.asObservable().subscribe(
 			user => {
 				this.user = user;
@@ -78,11 +84,28 @@ export class CareerComponent implements OnInit {
 			const file = event.target.files[0];
 			this.image = file;
 
+			console.log(this.image);
+
 			this.image_placeholder = file.name;
 		}
 	}
 
 	update_career() {
+		(<HTMLInputElement>document.getElementById('btn_modify_career')).disabled = true;
+		let form_data = new FormData();
+		form_data.append('career_name', this.form_update_career.get('career_name').value);
+		form_data.append('image', this.image);
+
+		this.careerService.update_career(this.form_update_career.get('id_career').value, form_data).subscribe(
+			next =>{
+				console.log('Carrera actualizada');
+				change_modal('update-career-modal', 'update-career-modal-body', 'Carrera actualizada correctamente');
+			},
+			error1 =>{
+				console.log(error1);
+				(<HTMLInputElement>document.getElementById('btn_modify_career')).disabled = false;
+			}
+		)
 
 	}
 
