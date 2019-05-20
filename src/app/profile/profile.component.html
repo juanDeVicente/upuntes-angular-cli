@@ -2,7 +2,7 @@
 	<div class="row" *ngIf="user">
 		<div class="col">
 		<b class="h1">{{ user.email }}
-			<button class="btn btn-danger" data-toggle="modal" data-target="#expel-user-modal">
+			<button class="btn btn-danger" data-toggle="modal" data-target="#expel-user-modal" *ngIf="logged_user && logged_user.admin == 1">
 				<img class="img-fluid" src="assets/icons/trash-can.svg" style="width: auto; height: 1em;">
 			</button>
 		</b>

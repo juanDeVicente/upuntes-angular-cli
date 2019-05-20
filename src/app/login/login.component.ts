@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../services/user/user.service';
 import {Router} from '@angular/router';
 import {User} from '../models/user';
+import {BreadcrumbService} from '../services/breadcrumb/breadcrumb.service';
 
 @Component({
 	selector: 'app-login',
@@ -15,11 +16,14 @@ export class LoginComponent implements OnInit {
 		password: new FormControl('', [Validators.required]),
 	});
 
-	constructor(private user_service: UserService, private router: Router) {
+	constructor(private user_service: UserService, private router: Router, private breadcrumb_service: BreadcrumbService) {
 	}
 
 	ngOnInit() {
 		let user_logged: User;
+		this.breadcrumb_service.career = undefined;
+		this.breadcrumb_service.subject = undefined;
+
 		this.user_service.logged_user.asObservable().subscribe(
 			user => user_logged = user
 		);
